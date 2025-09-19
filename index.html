@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FJTS AI - The Future of Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .dark\:glass-effect {
+             background: rgba(17, 24, 39, 0.6);
+             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.3), rgba(17, 24, 39, 0) 40%);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
+        }
+        .modal {
+            display: none;
+        }
+        .modal.active {
+            display: flex;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            animation: spin 1s linear infinite;
+            border-width: 3px;
+            border-style: solid;
+            border-color: transparent transparent #3b82f6 #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 dark:glass-effect glass-effect">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">FJTS AI</h1>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#features" class="hover:text-blue-400 transition-colors">Locations</a>
+                <a href="#settings" class="hover:text-blue-400 transition-colors">Settings</a>
+                <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-transform transform hover:scale-105">
+                    Log In
+                </button>
+            </nav>
+            <button id="mobileMenuBtn" class="md:hidden">
+                <i data-feather="menu" class="text-gray-900 dark:text-white"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 p-4">
+             <a href="#features" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Locations</a>
+             <a href="#settings" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Settings</a>
+             <button id="loginBtnMobile" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg">
+                Log In
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="hero-gradient min-h-screen flex items-center justify-center text-center py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">Welcome to FJTS AI</h2>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+                    Your all-in-one platform for generating stunning code, videos, and photos with the power of cutting-edge artificial intelligence. Unleash your creativity.
+                </p>
+                <div class="relative w-full max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-2 flex items-center">
+                    <i data-feather="terminal" class="w-5 h-5 ml-3 text-gray-400"></i>
+                    <input id="ai-prompt" type="text" placeholder="e.g., 'Create a python script for a snake game...'" class="w-full bg-transparent p-3 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none">
+                    <button id="generateBtn" class="bg-blue-600 text-white rounded-md px-5 py-2.5 font-semibold hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-transform transform hover:scale-105">
+                        Generate
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-gray-50 dark:bg-gray-900/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Come Visit Us</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">To view our service locations and arrange payment, please visit our official information site.</p>
+                </div>
+                <div class="text-center">
+                    <a href="https://sites.google.com/fjtservices/view" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 text-white rounded-lg px-8 py-4 font-semibold hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-transform transform hover:scale-105 text-lg">
+                        View Locations & Pay Here
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="py-20">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Advanced Settings</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Customize your FJTS AI experience.</p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-8">
+                    <!-- Theme Settings -->
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Theme</h4>
+                        <div class="flex items-center space-x-4">
+                            <p class="text-gray-600 dark:text-gray-300">Appearance:</p>
+                            <button id="theme-light" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">Light</button>
+                            <button id="theme-dark" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Dark</button>
+                            <button id="theme-system" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">System</button>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
+                    <!-- AI Model Settings -->
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">AI Configuration</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="ai-model" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default AI Model</label>
+                                <select id="ai-model" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                                    <option>FJTS-Turbo (Recommended)</option>
+                                    <option>FJTS-Creative</option>
+                                    <option>FJTS-Developer</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="creativity-level" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Creativity Level</label>
+                                <input id="creativity-level" type="range" min="0" max="100" value="70" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
+                    <!-- Notifications -->
+                    <div>
+                         <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Notifications</h4>
+                         <div class="flex items-center justify-between">
+                            <div>
+                               <p class="font-medium text-gray-900 dark:text-white">Email Notifications</p>
+                               <p class="text-sm text-gray-500 dark:text-gray-400">Receive updates on new features and account activity.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" value="" class="sr-only peer" checked>
+                              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                         </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700/50">
+        <div class="container mx-auto py-8 px-6 text-center text-gray-600 dark:text-gray-400">
+            <p>&copy; 2025 FJTS AI. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="hover:text-blue-400">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-400">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                
+                if (href && href !== '#') {
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Theme Switcher
+        const lightThemeBtn = document.getElementById('theme-light');
+        const darkThemeBtn = document.getElementById('theme-dark');
+        const systemThemeBtn = document.getElementById('theme-system');
+        const html = document.documentElement;
+
+        const updateThemeButtons = (theme) => {
+            lightThemeBtn.classList.remove('bg-blue-600', 'text-white');
+            darkThemeBtn.classList.remove('bg-blue-600', 'text-white');
+            systemThemeBtn.classList.remove('bg-blue-600', 'text-white');
+            if (theme === 'light') {
+                lightThemeBtn.classList.add('bg-blue-600', 'text-white');
+            } else if (theme === 'dark') {
+                darkThemeBtn.classList.add('bg-blue-600', 'text-white');
+            } else {
+                 systemThemeBtn.classList.add('bg-blue-600', 'text-white');
+            }
+        }
+        
+        const applyTheme = (theme) => {
+            if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                updateThemeButtons(theme === 'dark' ? 'dark' : 'system');
+            } else {
+                html.classList.remove('dark');
+                updateThemeButtons(theme === 'light' ? 'light' : 'system');
+            }
+        };
+
+        lightThemeBtn.addEventListener('click', () => { localStorage.theme = 'light'; applyTheme('light'); updateThemeButtons('light'); });
+        darkThemeBtn.addEventListener('click', () => { localStorage.theme = 'dark'; applyTheme('dark'); updateThemeButtons('dark'); });
+        systemThemeBtn.addEventListener('click', () => { localStorage.removeItem('theme'); applyTheme('system'); updateThemeButtons('system'); });
+        
+        const storedTheme = localStorage.getItem('theme');
+        applyTheme(storedTheme || 'system');
+        if(!storedTheme) updateThemeButtons('system');
+    </script>
+</body>
+</html>
+
