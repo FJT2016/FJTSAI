@@ -371,15 +371,15 @@
             }
         });
 
-        // --- NEW: GEMINI AI LOGIC ---
+        // --- GEMINI AI LOGIC ---
         const generateBtn = document.getElementById('generateBtn');
         const aiPromptInput = document.getElementById('ai-prompt');
         const aiOutputContainer = document.getElementById('ai-output');
         const loadingSpinner = document.getElementById('loading-spinner');
         const resultContent = document.getElementById('result-content');
         
-        // IMPORTANT: Replace with your actual API key from Google AI Studio
-        const API_KEY = ""; // In this environment, the key is handled automatically.
+        // In this environment, the API key is handled automatically.
+        const API_KEY = ""; 
 
         async function callGeminiApi(prompt) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
@@ -395,7 +395,8 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API error: ${response.statusText}`);
+                    const errorBody = await response.json();
+                    throw new Error(`API error: ${response.statusText} - ${errorBody?.error?.message}`);
                 }
 
                 const result = await response.json();
@@ -435,8 +436,8 @@
             let formattedResponse = responseText
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
-                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 rounded-md p-4 overflow-x-auto"><code class="language-$1 text-white">$2</code></pre>')
+                .replace(/`([^`]+)`/g, '<code class="bg-gray-700 rounded px-1 py-0.5">$1</code>')
                 .replace(/\n/g, '<br>');
 
             resultContent.innerHTML = formattedResponse;
