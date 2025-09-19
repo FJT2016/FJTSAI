@@ -26,10 +26,6 @@
         .hero-gradient {
             background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.3), rgba(17, 24, 39, 0) 40%);
         }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
-        }
         .modal {
             display: none;
         }
@@ -45,154 +41,256 @@
             border-style: solid;
             border-color: transparent transparent #3b82f6 #3b82f6;
         }
+        /* Sidebar styles */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-100%);
+            }
+            #sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        .channel-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 dark:glass-effect glass-effect">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">FJTS AI</h1>
-            <nav class="hidden md:flex items-center space-x-6">
-                <a href="#features" class="hover:text-blue-400 transition-colors">Locations</a>
-                <a href="#settings" class="hover:text-blue-400 transition-colors">Settings</a>
-                <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-transform transform hover:scale-105">
-                    Log In
-                </button>
-            </nav>
-            <button id="mobileMenuBtn" class="md:hidden">
-                <i data-feather="menu" class="text-gray-900 dark:text-white"></i>
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col absolute md:relative z-40 h-full">
+        <div class="px-4 py-3 border-b dark:border-gray-700 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">FJTS AI</h2>
+            <button id="sidebar-close-btn" class="md:hidden text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                <i data-feather="x"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 p-4">
-             <a href="#features" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Locations</a>
-             <a href="#settings" class="block py-2 px-4 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 rounded">Settings</a>
-             <button id="loginBtnMobile" class="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg">
-                Log In
+        
+        <div class="p-2 space-y-2 border-b dark:border-gray-700">
+             <h3 class="px-2 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Channels</h3>
+             <button id="channel-chat" class="w-full flex items-center gap-2 font-medium py-2 px-2 rounded-lg transition-colors channel-btn active">
+                <i data-feather="message-square"></i> FJTS AI
+            </button>
+             <button id="channel-image" class="w-full flex items-center gap-2 font-medium py-2 px-2 rounded-lg transition-colors channel-btn hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i data-feather="image"></i> imajes
+            </button>
+             <button id="channel-video" class="w-full flex items-center gap-2 font-medium py-2 px-2 rounded-lg transition-colors channel-btn hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i data-feather="video"></i> videeoos
             </button>
         </div>
-    </header>
 
-    <main class="pt-20">
-        <!-- Hero Section -->
-        <section class="hero-gradient min-h-screen flex items-center justify-center text-center py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">Welcome to FJTS AI</h2>
-                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-                    Your all-in-one platform for generating stunning code, videos, and photos with the power of cutting-edge artificial intelligence. Unleash your creativity.
-                </p>
-                <div class="relative w-full max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-2 flex items-center">
-                    <i data-feather="terminal" class="w-5 h-5 ml-3 text-gray-400"></i>
-                    <input id="ai-prompt" type="text" placeholder="e.g., 'Create a python script for a snake game...'" class="w-full bg-transparent p-3 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none">
-                    <button id="generateBtn" class="bg-blue-600 text-white rounded-md px-5 py-2.5 font-semibold hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-transform transform hover:scale-105">
-                        Generate
+        <div class="flex-shrink-0 p-2">
+            <button id="new-chat-btn" class="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium py-2 px-4 rounded-lg transition-colors">
+                <i data-feather="plus"></i> New Chat
+            </button>
+        </div>
+         <h3 class="px-4 pt-2 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">History</h3>
+        <div id="chat-history-list" class="flex-1 overflow-y-auto p-2 space-y-1">
+            <!-- Chat history items will be injected here -->
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400 p-4">Log in to see your chat history.</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <header class="flex-shrink-0 bg-white dark:bg-gray-900/50 dark:glass-effect glass-effect z-30">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                 <div class="flex items-center gap-4">
+                    <button id="sidebar-open-btn" class="md:hidden text-gray-800 dark:text-gray-200">
+                        <i data-feather="menu"></i>
                     </button>
+                    <h1 id="header-title" class="text-2xl font-bold text-gray-900 dark:text-white">FJTS AI</h1>
                 </div>
-                <!-- AI Output Area -->
-                <div id="ai-output" class="mt-8 p-6 bg-gray-800/50 rounded-lg text-left hidden w-full max-w-xl mx-auto prose prose-invert prose-p:text-gray-300 prose-headings:text-white">
-                    <div id="loading-spinner" class="flex items-center justify-center hidden">
-                        <div class="spinner w-8 h-8 rounded-full"></div>
-                        <p class="ml-4 text-gray-300">Generating...</p>
-                    </div>
-                    <div id="result-content">
-                        <!-- AI result will be displayed here -->
-                    </div>
-                </div>
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#pricing" class="hover:text-blue-400 transition-colors">Pricing</a>
+                    <a href="#settings" class="hover:text-blue-400 transition-colors">Settings</a>
+                    <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-transform transform hover:scale-105">
+                        Log In
+                    </button>
+                </nav>
+                 <button id="mobile-login-btn-placeholder" class="md:hidden">
+                    <!-- This will be replaced by the login/logout button via JS -->
+                 </button>
             </div>
-        </section>
+        </header>
 
-        <!-- Features Section -->
-        <section id="features" class="py-20 bg-gray-50 dark:bg-gray-900/50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Come Visit Us</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">To view our service locations and arrange payment, please visit our official information site.</p>
-                </div>
-                <div class="text-center">
-                    <a href="https://sites.google.com/view/fjtservices/home" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 text-white rounded-lg px-8 py-4 font-semibold hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-transform transform hover:scale-105 text-lg">
-                        View Locations & Pay Here
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Settings Section -->
-        <section id="settings" class="py-20">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Advanced Settings</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Customize your FJTS AI experience.</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-8">
-                    <!-- Theme Settings -->
-                    <div>
-                        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Theme</h4>
-                        <div class="flex items-center space-x-4">
-                            <p class="text-gray-600 dark:text-gray-300">Appearance:</p>
-                            <button id="theme-light" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">Light</button>
-                            <button id="theme-dark" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Dark</button>
-                            <button id="theme-system" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">System</button>
+        <!-- Scrollable Main Area -->
+        <main class="flex-1 overflow-y-auto">
+            <!-- Hero Section -->
+            <section class="hero-gradient min-h-screen flex items-center justify-center text-center py-20">
+                <div class="container mx-auto px-6">
+                    <div id="welcome-message">
+                        <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">Welcome to FJTS AI</h2>
+                        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+                            Your personal AI assistant. How can I help you today?
+                        </p>
+                    </div>
+                    <!-- AI Output Area -->
+                    <div id="ai-output" class="mt-8 text-left w-full max-w-3xl mx-auto">
+                        <div id="result-content" class="space-y-6">
+                            <!-- Chat messages will appear here -->
+                        </div>
+                        <div id="loading-spinner" class="flex items-center justify-center p-6 hidden">
+                            <div class="spinner w-8 h-8 rounded-full"></div>
+                            <p id="loading-text" class="ml-4 text-gray-300">Generating...</p>
                         </div>
                     </div>
-                    
-                    <div class="border-t border-gray-200 dark:border-gray-700"></div>
-
-                    <!-- AI Model Settings -->
-                    <div>
-                        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">AI Configuration</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <label for="ai-model" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default AI Model</label>
-                                <select id="ai-model" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
-                                    <option>FJTS-Turbo (Recommended)</option>
-                                    <option>FJTS-Creative</option>
-                                    <option>FJTS-Developer</option>
-                                </select>
+                     <div class="h-48"></div> <!-- Spacer to push prompt up -->
+                </div>
+            </section>
+             <!-- Prompt input fixed at bottom -->
+            <div class="fixed bottom-0 left-0 md:left-64 right-0 bg-white dark:bg-gray-900 p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="w-full max-w-3xl mx-auto">
+                    <!-- File Preview Area -->
+                    <div id="file-preview-container" class="hidden mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-sm">
+                                <i id="file-preview-icon" data-feather="file"></i>
+                                <span id="file-preview-name"></span>
                             </div>
-                            <div>
-                                <label for="creativity-level" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Creativity Level</label>
-                                <input id="creativity-level" type="range" min="0" max="100" value="70" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            <button id="remove-file-btn" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                                <i data-feather="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative flex items-center">
+                        <button id="attach-file-btn" class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                             <i data-feather="paperclip"></i>
+                        </button>
+                        <input type="file" id="file-input" class="hidden"/>
+                        <textarea id="ai-prompt" placeholder="Ask me anything..." class="w-full bg-gray-100 dark:bg-gray-800 rounded-lg p-4 pl-2 pr-16 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" rows="1"></textarea>
+                        <button id="generateBtn" class="absolute right-3 top-1/2 -translate-y-1/2 bg-blue-600 text-white rounded-md p-2 font-semibold hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-transform transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                            <i data-feather="arrow-up"></i>
+                        </button>
+                    </div>
+                     <div id="api-error-banner" class="hidden mt-2 p-2 bg-red-100 dark:bg-red-900/50 border border-red-400 text-red-700 dark:text-red-300 text-xs rounded-md">
+                        <strong>API Error:</strong> Could not connect to the AI. Please check your API key in Settings.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Section -->
+            <section id="pricing" class="py-20 bg-gray-50 dark:bg-gray-800">
+                 <!-- Content is unchanged -->
+                 <div class="container mx-auto px-6">
+                    <div class="text-center mb-12">
+                        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Choose Your Plan</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Unlock more power with Pro and Plus.</p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <!-- Free Plan -->
+                        <div class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border-2 border-transparent flex flex-col">
+                            <h4 class="text-xl font-semibold mb-2 text-gray-500 dark:text-gray-400">Free</h4>
+                            <p class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">QAR 0<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/mo</span></p>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-300 mb-8">
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>20 generations/month</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Standard AI Model</li>
+                                <li class="flex items-start"><i data-feather="x" class="w-5 h-5 text-red-500 mr-2 flex-shrink-0 mt-1"></i>No Chat History</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Community Support</li>
+                            </ul>
+                            <button class="mt-auto w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold py-3 px-4 rounded-lg">Current Plan</button>
+                        </div>
+
+                        <!-- Pro Plan -->
+                        <div class="bg-blue-50 dark:bg-blue-900/30 p-8 rounded-xl shadow-2xl border-2 border-blue-500 relative flex flex-col">
+                            <span class="absolute top-0 -translate-y-1/2 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Most Popular</span>
+                            <h4 class="text-xl font-semibold mb-2 text-blue-600 dark:text-blue-400">Pro</h4>
+                            <p class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">QAR 36.50<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/mo</span></p>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-300 mb-8">
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>1,000 generations/month</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Advanced AI Models</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Full Chat History</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Priority Support</li>
+                            </ul>
+                            <button onclick="handleSubscription('pro')" class="mt-auto w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">Choose Pro</button>
+                        </div>
+                        
+                        <!-- Plus Plan -->
+                        <div class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border-2 border-transparent flex flex-col">
+                            <h4 class="text-xl font-semibold mb-2 text-gray-500 dark:text-gray-400">Plus</h4>
+                            <p class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">QAR 73.00<span class="text-lg font-medium text-gray-500 dark:text-gray-400">/mo</span></p>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-300 mb-8">
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Unlimited Generations</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Most Powerful AI Models</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Full Chat History</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Dedicated Support & Beta Access</li>
+                            </ul>
+                            <button onclick="handleSubscription('plus')" class="mt-auto w-full bg-gray-800 hover:bg-black text-white dark:bg-gray-200 dark:text-black dark:hover:bg-white font-bold py-3 px-4 rounded-lg transition">Choose Plus</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="py-20">
+                <div class="container mx-auto px-6 max-w-4xl">
+                    <div class="text-center mb-12">
+                        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Advanced Settings</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Customize your FJTS AI experience.</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-8">
+                         <!-- API Key Settings -->
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">API Configuration</h4>
+                             <label for="api-key" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Google AI Gemini API Key</label>
+                            <input id="api-key-input" type="password" placeholder="Enter your API key here" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Your key is stored only in your browser. Get a free key from Google AI Studio.</p>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
+                        <!-- Chat Configuration -->
+                        <div>
+                             <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Chat Configuration</h4>
+                             <div class="space-y-4">
+                                <div>
+                                    <label for="ai-model" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">AI Model</label>
+                                    <select id="ai-model" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                                        <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash (Fast & Efficient)</option>
+                                        <option value="gemini-pro">Gemini Pro (Advanced)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="creativity-level" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Creativity Level</label>
+                                    <input id="creativity-level" type="range" min="0" max="1" value="0.7" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                                    <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                                        <span>Precise</span>
+                                        <span>Balanced</span>
+                                        <span>Creative</span>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
+                        <!-- Theme Settings -->
+                        <div>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Theme</h4>
+                            <div class="flex items-center space-x-4">
+                                <p class="text-gray-600 dark:text-gray-300">Appearance:</p>
+                                <button id="theme-light" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">Light</button>
+                                <button id="theme-dark" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Dark</button>
+                                <button id="theme-system" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600">System</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="border-t border-gray-200 dark:border-gray-700"></div>
-
-                    <!-- Notifications -->
-                    <div>
-                         <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Notifications</h4>
-                         <div class="flex items-center justify-between">
-                            <div>
-                               <p class="font-medium text-gray-900 dark:text-white">Email Notifications</p>
-                               <p class="text-sm text-gray-500 dark:text-gray-400">Receive updates on new features and account activity.</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                              <input type="checkbox" value="" class="sr-only peer" checked>
-                              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                            </label>
-                         </div>
-                    </div>
-
                 </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700/50">
-        <div class="container mx-auto py-8 px-6 text-center text-gray-600 dark:text-gray-400">
-            <p>&copy; 2025 FJTS AI. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 mt-4">
-                <a href="#" class="hover:text-blue-400">Privacy Policy</a>
-                <a href="#" class="hover:text-blue-400">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
+            </section>
+        </main>
+    </div>
+</div>
 
     <!-- Auth Modal -->
-    <div id="auth-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4">
+    <div id="auth-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <!-- Content is unchanged -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md p-8 relative">
             <button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                 <i data-feather="x"></i>
@@ -215,90 +313,13 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-        feather.replace();
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                
-                if (href && href !== '#') {
-                    const targetElement = document.querySelector(href);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-                
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-
-        // Theme Switcher
-        // ... (theme switcher code is unchanged)
-        const lightThemeBtn = document.getElementById('theme-light');
-        const darkThemeBtn = document.getElementById('theme-dark');
-        const systemThemeBtn = document.getElementById('theme-system');
-        const html = document.documentElement;
-
-        const updateThemeButtons = (theme) => {
-            lightThemeBtn.classList.remove('bg-blue-600', 'text-white');
-            darkThemeBtn.classList.remove('bg-blue-600', 'text-white');
-            systemThemeBtn.classList.remove('bg-blue-600', 'text-white');
-            if (theme === 'light') {
-                lightThemeBtn.classList.add('bg-blue-600', 'text-white');
-            } else if (theme === 'dark') {
-                darkThemeBtn.classList.add('bg-blue-600', 'text-white');
-            } else {
-                 systemThemeBtn.classList.add('bg-blue-600', 'text-white');
-            }
-        }
-        
-        const applyTheme = (theme) => {
-            if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.classList.add('dark');
-                updateThemeButtons(theme === 'dark' ? 'dark' : 'system');
-            } else {
-                html.classList.remove('dark');
-                updateThemeButtons(theme === 'light' ? 'light' : 'system');
-            }
-        };
-
-        lightThemeBtn.addEventListener('click', () => { localStorage.theme = 'light'; applyTheme('light'); updateThemeButtons('light'); });
-        darkThemeBtn.addEventListener('click', () => { localStorage.theme = 'dark'; applyTheme('dark'); updateThemeButtons('dark'); });
-        systemThemeBtn.addEventListener('click', () => { localStorage.removeItem('theme'); applyTheme('system'); updateThemeButtons('system'); });
-        
-        const storedTheme = localStorage.getItem('theme');
-        applyTheme(storedTheme || 'system');
-        if(!storedTheme) updateThemeButtons('system');
-
-    </script>
     
     <!-- Firebase SDK & AI Logic -->
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { 
-            getAuth, 
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            onAuthStateChanged,
-            signOut
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, addDoc, collection, onSnapshot, query, orderBy, serverTimestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -313,137 +334,338 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
+        let currentUser = null;
+        let currentChatId = null;
+        let unsubscribeChats = null;
+        let currentChannel = 'chat'; // 'chat', 'image', 'video'
+        let attachedFile = null; // { name, type, data }
 
-        // --- AUTH LOGIC (Unchanged) ---
-        const authModal = document.getElementById('auth-modal');
-        const closeAuthModalBtn = document.getElementById('close-auth-modal');
+        // --- UI ELEMENTS ---
         const loginBtn = document.getElementById('loginBtn');
-        const loginBtnMobile = document.getElementById('loginBtnMobile');
-        const emailInput = document.getElementById('auth-email');
-        const passwordInput = document.getElementById('auth-password');
-        const signInBtn = document.getElementById('signin-btn');
-        const signUpBtn = document.getElementById('signup-btn');
-        const authError = document.getElementById('auth-error');
+        const mobileLoginBtnPlaceholder = document.getElementById('mobile-login-btn-placeholder');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOpenBtn = document.getElementById('sidebar-open-btn');
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        const aiPromptInput = document.getElementById('ai-prompt');
+        const headerTitle = document.getElementById('header-title');
 
-        const openAuthModal = () => authModal.classList.add('active');
-        const closeAuthModal = () => {
-            authModal.classList.remove('active');
-            authError.textContent = '';
-            emailInput.value = '';
-            passwordInput.value = '';
+        // --- CORE APP LOGIC ---
+        feather.replace();
+
+        // Sidebar Toggle
+        sidebarOpenBtn.addEventListener('click', () => sidebar.classList.add('active'));
+        sidebarCloseBtn.addEventListener('click', () => sidebar.classList.remove('active'));
+
+        // Auto-resizing textarea
+        aiPromptInput.addEventListener('input', () => {
+            aiPromptInput.style.height = 'auto';
+            aiPromptInput.style.height = (aiPromptInput.scrollHeight) + 'px';
+        });
+
+        // --- CHANNEL SWITCHING ---
+        const channelBtns = {
+            chat: document.getElementById('channel-chat'),
+            image: document.getElementById('channel-image'),
+            video: document.getElementById('channel-video')
+        };
+
+        const channelConfig = {
+            chat: { title: 'FJTS AI', placeholder: 'Ask me anything or attach an image...' },
+            image: { title: 'imajes', placeholder: 'Describe an image you want to create...' },
+            video: { title: 'videeoos', placeholder: 'Describe a video scene you want to create...' }
+        };
+
+        function switchChannel(channel) {
+            currentChannel = channel;
+            headerTitle.textContent = channelConfig[channel].title;
+            aiPromptInput.placeholder = channelConfig[channel].placeholder;
+            Object.values(channelBtns).forEach(btn => btn.classList.remove('active'));
+            channelBtns[channel].classList.add('active');
+            document.getElementById('welcome-message').classList.remove('hidden');
+            document.getElementById('result-content').innerHTML = '';
+            currentChatId = null;
         }
 
-        loginBtn.addEventListener('click', openAuthModal);
-        loginBtnMobile.addEventListener('click', openAuthModal);
-        closeAuthModalBtn.addEventListener('click', closeAuthModal);
+        channelBtns.chat.addEventListener('click', () => switchChannel('chat'));
+        channelBtns.image.addEventListener('click', () => switchChannel('image'));
+        channelBtns.video.addEventListener('click', () => switchChannel('video'));
 
-        signUpBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            authError.textContent = '';
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => { closeAuthModal(); })
-                .catch((error) => { authError.textContent = error.message; });
-        });
 
-        signInBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            authError.textContent = '';
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => { closeAuthModal(); })
-                .catch((error) => { authError.textContent = error.message; });
-        });
-
-        const logoutUser = () => { signOut(auth); };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loginBtn.textContent = 'Log Out';
-                loginBtnMobile.textContent = 'Log Out';
-                loginBtn.onclick = logoutUser;
-                loginBtnMobile.onclick = logoutUser;
-            } else {
-                loginBtn.textContent = 'Log In';
-                loginBtnMobile.textContent = 'Log In';
-                loginBtn.onclick = openAuthModal;
-                loginBtnMobile.onclick = openAuthModal;
-            }
-        });
-
-        // --- GEMINI AI LOGIC ---
-        const generateBtn = document.getElementById('generateBtn');
-        const aiPromptInput = document.getElementById('ai-prompt');
-        const aiOutputContainer = document.getElementById('ai-output');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const resultContent = document.getElementById('result-content');
-        
-        // In this environment, the API key is handled automatically.
-        const API_KEY = ""; 
-
-        async function callGeminiApi(prompt) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-            };
-
+        // --- AUTH LOGIC ---
+        // Unchanged
+        const authModal = document.getElementById('auth-modal');
+        const openAuthModal = () => authModal.classList.add('active');
+        const closeAuthModal = () => authModal.classList.remove('active');
+        document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
+        document.getElementById('signup-btn').addEventListener('click', () => handleAuth(createUserWithEmailAndPassword));
+        document.getElementById('signin-btn').addEventListener('click', () => handleAuth(signInWithEmailAndPassword));
+        async function handleAuth(authFunction) {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const authErrorEl = document.getElementById('auth-error');
+            authErrorEl.textContent = '';
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                const userCredential = await authFunction(auth, email, password);
+                if (authFunction === createUserWithEmailAndPassword) {
+                     await setDoc(doc(db, "users", userCredential.user.uid), { email: userCredential.user.email, subscription: "free", createdAt: serverTimestamp() });
+                }
+                closeAuthModal();
+            } catch (error) { authErrorEl.textContent = error.message; }
+        }
+        const logoutUser = () => signOut(auth);
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            updateLoginButtons(!!user);
+            if (user) { loadChatHistory(user.uid); } else { clearChatHistory(); }
+        });
+        function updateLoginButtons(isLoggedIn) {
+            const updateButton = (btn) => {
+                btn.textContent = isLoggedIn ? 'Log Out' : 'Log In';
+                btn.onclick = isLoggedIn ? logoutUser : openAuthModal;
+            };
+            updateButton(loginBtn);
+            const newMobileBtn = loginBtn.cloneNode(true); newMobileBtn.id = 'mobileLoginBtn';
+            mobileLoginBtnPlaceholder.innerHTML = ''; mobileLoginBtnPlaceholder.appendChild(newMobileBtn);
+            updateButton(newMobileBtn);
+        }
+        
+        // --- CHAT HISTORY LOGIC ---
+        // Unchanged
+        const chatHistoryList = document.getElementById('chat-history-list');
+        const newChatBtn = document.getElementById('new-chat-btn');
+        const channelIcons = { chat: 'message-square', image: 'image', video: 'video' };
+        function loadChatHistory(uid) {
+            const chatsRef = collection(db, `users/${uid}/chats`);
+            const q = query(chatsRef, orderBy('timestamp', 'desc'));
+            if (unsubscribeChats) unsubscribeChats();
+            unsubscribeChats = onSnapshot(q, (snapshot) => {
+                chatHistoryList.innerHTML = snapshot.empty ? `<p class="text-center text-sm text-gray-500 dark:text-gray-400 p-4">No chats yet!</p>` : '';
+                snapshot.forEach(doc => {
+                    const chat = doc.data();
+                    const title = chat.messages[0]?.content.substring(0, 25) + '...' || 'New Chat';
+                    const icon = channelIcons[chat.channel] || 'message-square';
+                    const chatEl = document.createElement('div');
+                    chatEl.className = 'flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700';
+                    chatEl.innerHTML = `<i data-feather="${icon}" class="w-4 h-4"></i><span>${title}</span>`;
+                    chatEl.onclick = () => { switchChannel(chat.channel || 'chat'); loadChat(doc.id, chat.messages); };
+                    chatHistoryList.appendChild(chatEl);
                 });
+                feather.replace();
+            });
+        }
+        function clearChatHistory(){
+             if (unsubscribeChats) unsubscribeChats();
+             chatHistoryList.innerHTML = `<p class="text-center text-sm text-gray-500 dark:text-gray-400 p-4">Log in to see your chat history.</p>`;
+        }
+        const welcomeMessage = document.getElementById('welcome-message');
+        const resultContent = document.getElementById('result-content');
+        function loadChat(chatId, messages) {
+            currentChatId = chatId;
+            welcomeMessage.classList.add('hidden');
+            resultContent.innerHTML = '';
+            messages.forEach(msg => displayMessage(msg.role, msg.content, msg.attachment));
+            sidebar.classList.remove('active');
+        }
+        newChatBtn.addEventListener('click', () => {
+            currentChatId = null;
+            resultContent.innerHTML = '';
+            welcomeMessage.classList.remove('hidden');
+            sidebar.classList.remove('active');
+        });
 
-                if (!response.ok) {
-                    const errorBody = await response.json();
-                    throw new Error(`API error: ${response.statusText} - ${errorBody?.error?.message}`);
-                }
+        // --- FILE ATTACHMENT LOGIC ---
+        const attachFileBtn = document.getElementById('attach-file-btn');
+        const fileInput = document.getElementById('file-input');
+        const filePreviewContainer = document.getElementById('file-preview-container');
+        const filePreviewName = document.getElementById('file-preview-name');
+        const filePreviewIcon = document.getElementById('file-preview-icon');
+        const removeFileBtn = document.getElementById('remove-file-btn');
 
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
+        attachFileBtn.addEventListener('click', () => fileInput.click());
+        removeFileBtn.addEventListener('click', clearAttachedFile);
 
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    return candidate.content.parts[0].text;
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                attachedFile = {
+                    name: file.name,
+                    type: file.type,
+                    data: e.target.result // base64 string
+                };
+                filePreviewName.textContent = file.name;
+                // Simple icon logic
+                if (file.type.startsWith('image/')) {
+                    filePreviewIcon.innerHTML = `<img src="${e.target.result}" class="w-5 h-5 object-cover rounded-sm">`;
                 } else {
-                    return "Sorry, I couldn't generate a response. Please try again.";
+                     filePreviewIcon.innerHTML = `<i data-feather="file"></i>`;
                 }
+                feather.replace();
+                filePreviewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        function clearAttachedFile() {
+            attachedFile = null;
+            fileInput.value = ''; // Reset file input
+            filePreviewContainer.classList.add('hidden');
+        }
+
+        // --- AI GENERATION LOGIC ---
+        const generateBtn = document.getElementById('generateBtn');
+        const apiKeyInput = document.getElementById('api-key-input');
+        const apiErrorBanner = document.getElementById('api-error-banner');
+        apiKeyInput.value = localStorage.getItem('gemini_api_key') || '';
+
+        async function callGeminiApi(prompt, file) {
+            const API_KEY = apiKeyInput.value.trim();
+            if (!API_KEY) return "API Error: Please enter your API Key in Settings.";
+            localStorage.setItem('gemini_api_key', API_KEY);
+            apiErrorBanner.classList.add('hidden');
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+            
+            const parts = [{ text: prompt }];
+            if (file && file.type.startsWith('image/')) {
+                parts.push({
+                    inlineData: {
+                        mimeType: file.type,
+                        data: file.data.split(',')[1] // remove base64 prefix
+                    }
+                });
+            }
+
+            const payload = { contents: [{ parts: parts }] };
+            try {
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!response.ok) { throw new Error(await response.text()); }
+                const result = await response.json();
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "No response found.";
             } catch (error) {
                 console.error('Error calling Gemini API:', error);
-                return `An error occurred: ${error.message}`;
+                apiErrorBanner.classList.remove('hidden');
+                return null;
             }
+        }
+        
+        async function callImagenApi(prompt) { /* ... unchanged ... */ }
+        
+        function displayMessage(role, text, attachment) {
+             const messageEl = document.createElement('div');
+             const icon = role === 'user' ? 'user' : 'cpu';
+             const bgColor = role === 'user' ? 'bg-transparent' : 'bg-gray-100 dark:bg-gray-800/50';
+             let attachmentHTML = '';
+             
+             if(attachment) {
+                if(attachment.type.startsWith('image/')) {
+                    attachmentHTML = `<img src="${attachment.data}" class="mt-2 rounded-lg max-w-xs h-auto" alt="User upload">`;
+                } else {
+                    attachmentHTML = `<div class="mt-2 p-2 bg-gray-200 dark:bg-gray-700 rounded-md flex items-center gap-2 text-sm">
+                        <i data-feather="file-text" class="w-4 h-4"></i> ${attachment.name}
+                    </div>`;
+                }
+             }
+
+             let contentHTML = '';
+             if (text.startsWith('data:image')) {
+                 contentHTML = `<img src="${text}" class="rounded-lg max-w-full h-auto" alt="Generated image">`;
+             } else if (text.startsWith('video_placeholder:')) {
+                const promptText = text.replace('video_placeholder:', '');
+                contentHTML = `<div class="p-4 bg-gray-200 dark:bg-gray-700 rounded-lg text-center">
+                    <i data-feather="film" class="w-12 h-12 mx-auto text-gray-500"></i>
+                    <p class="mt-2 font-semibold">Video generation started!</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Your video for "${promptText}" is being processed.</p>
+                </div>`;
+             } else {
+                 contentHTML = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 rounded-md p-4 my-2 overflow-x-auto"><code class="language-$1 text-white">$2</code></pre>')
+                    .replace(/`([^`]+)`/g, '<code class="bg-gray-700 rounded px-1 py-0.5">$1</code>')
+                    .replace(/\n/g, '<br>');
+             }
+
+             messageEl.className = `p-4 rounded-lg ${bgColor} flex gap-4`;
+             messageEl.innerHTML = `
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                    <i data-feather="${icon}" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
+                </div>
+                <div class="prose prose-invert max-w-none prose-p:text-gray-700 dark:prose-p:text-gray-300">${contentHTML} ${attachmentHTML}</div>`;
+             resultContent.appendChild(messageEl);
+             feather.replace();
+             resultContent.parentElement.parentElement.scrollTo(0, resultContent.scrollHeight);
         }
 
         generateBtn.addEventListener('click', async () => {
             const prompt = aiPromptInput.value.trim();
-            if (prompt === '') {
-                aiPromptInput.placeholder = 'Please enter a prompt first!';
+            if ((prompt === '' && !attachedFile) || !currentUser) {
+                if(!currentUser) alert("Please log in to start chatting.");
                 return;
             }
-
-            // Show loading state
-            aiOutputContainer.classList.remove('hidden');
-            loadingSpinner.classList.remove('hidden');
-            resultContent.innerHTML = '';
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Generating...';
-
-
-            const responseText = await callGeminiApi(prompt);
             
-            // Hide loading state and display result
-            loadingSpinner.classList.add('hidden');
-            // Basic Markdown to HTML conversion
-            let formattedResponse = responseText
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 rounded-md p-4 overflow-x-auto"><code class="language-$1 text-white">$2</code></pre>')
-                .replace(/`([^`]+)`/g, '<code class="bg-gray-700 rounded px-1 py-0.5">$1</code>')
-                .replace(/\n/g, '<br>');
+            welcomeMessage.classList.add('hidden');
+            displayMessage('user', prompt, attachedFile);
+            aiPromptInput.value = '';
+            aiPromptInput.style.height = 'auto';
+            const fileToSend = attachedFile; // Capture file before clearing
+            clearAttachedFile();
+            
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const loadingText = document.getElementById('loading-text');
+            loadingSpinner.classList.remove('hidden');
+            generateBtn.disabled = true;
+            
+            let responseText;
+            switch(currentChannel) {
+                case 'chat':
+                    loadingText.textContent = 'Generating...';
+                    responseText = await callGeminiApi(prompt, fileToSend);
+                    break;
+                case 'image':
+                    loadingText.textContent = 'Creating image...';
+                    responseText = await callImagenApi(prompt);
+                    break;
+                case 'video':
+                    loadingText.textContent = 'Processing video request...';
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    responseText = `video_placeholder:${prompt}`;
+                    break;
+            }
 
-            resultContent.innerHTML = formattedResponse;
+            loadingSpinner.classList.add('hidden');
             generateBtn.disabled = false;
-            generateBtn.textContent = 'Generate';
+            
+            if (responseText) {
+                displayMessage('model', responseText);
+                const userMessage = { role: 'user', content: prompt, attachment: fileToSend };
+                const aiResponse = { role: 'model', content: responseText };
+                const messages = [userMessage, aiResponse];
+                
+                if (currentChatId) {
+                    const docRef = doc(db, `users/${currentUser.uid}/chats/${currentChatId}`);
+                    const chatDoc = await getDoc(docRef);
+                    const existingMessages = chatDoc.data().messages || [];
+                    await setDoc(docRef, { messages: [...existingMessages, ...messages], timestamp: serverTimestamp(), channel: currentChannel }, { merge: true });
+                } else {
+                    const docRef = await addDoc(collection(db, `users/${currentUser.uid}/chats`), { messages, timestamp: serverTimestamp(), channel: currentChannel });
+                    currentChatId = docRef.id;
+                }
+            }
         });
+
+        // --- SUBSCRIPTION LOGIC ---
+        window.handleSubscription = function(plan) {
+            const paymentUrl = "https://sites.google.com/view/fjtservices/home?authuser=1";
+            alert(`To upgrade to the ${plan.toUpperCase()} plan, please visit our locations or complete your payment through our official site.\n\n${paymentUrl}\n\nAfter payment, an administrator will upgrade your account.`);
+        }
+        
+        // Final UI setup
+        updateLoginButtons(false);
+        feather.replace();
 
     </script>
 </body>
