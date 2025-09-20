@@ -206,9 +206,9 @@
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>1,000 generations/month</li>
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Advanced AI Models</li>
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Full Chat History</li>
-                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Priority Support</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i><a href="mailto:fardaan.tareen@gmail.com" class="hover:underline">Priority Support</a></li>
                             </ul>
-                            <button onclick="handleSubscription('pro')" class="mt-auto w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">Choose Pro</button>
+                            <button id="choose-pro-btn" class="mt-auto w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">Choose Pro</button>
                         </div>
                         
                         <!-- Plus Plan -->
@@ -219,9 +219,9 @@
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Unlimited Generations</li>
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Most Powerful AI Models</li>
                                 <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Full Chat History</li>
-                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i>Dedicated Support & Beta Access</li>
+                                <li class="flex items-start"><i data-feather="check" class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1"></i><a href="mailto:fardaan.tareen@gmail.com" class="hover:underline">Dedicated Support & Beta Access</a></li>
                             </ul>
-                            <button onclick="handleSubscription('plus')" class="mt-auto w-full bg-gray-800 hover:bg-black text-white dark:bg-gray-200 dark:text-black dark:hover:bg-white font-bold py-3 px-4 rounded-lg transition">Choose Plus</button>
+                            <button id="choose-plus-btn" class="mt-auto w-full bg-gray-800 hover:bg-black text-white dark:bg-gray-200 dark:text-black dark:hover:bg-white font-bold py-3 px-4 rounded-lg transition">Choose Plus</button>
                         </div>
                     </div>
                 </div>
@@ -658,10 +658,14 @@
         });
 
         // --- SUBSCRIPTION LOGIC ---
-        window.handleSubscription = function(plan) {
+        const chooseProBtn = document.getElementById('choose-pro-btn');
+        const choosePlusBtn = document.getElementById('choose-plus-btn');
+        function handleSubscription(plan) {
             const paymentUrl = "https://sites.google.com/view/fjtservices/home?authuser=1";
             alert(`To upgrade to the ${plan.toUpperCase()} plan, please visit our locations or complete your payment through our official site.\n\n${paymentUrl}\n\nAfter payment, an administrator will upgrade your account.`);
         }
+        chooseProBtn.addEventListener('click', () => handleSubscription('pro'));
+        choosePlusBtn.addEventListener('click', () => handleSubscription('plus'));
         
         // Final UI setup
         updateLoginButtons(false);
@@ -670,4 +674,6 @@
     </script>
 </body>
 </html>
+
+
 
